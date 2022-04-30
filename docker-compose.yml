@@ -1,0 +1,17 @@
+version: '3.9'
+services:
+
+  composer:
+   image: composer
+   volumes:
+     - ./html:/app
+   command: sh -c "composer install --ignore-platform-reqs && php artisan key:generate && chown -R 33:33 /app"
+
+  php:
+   build:
+     context: .
+   restart: always
+   ports:
+     - "80:80"
+   volumes:
+     - ./html:/var/www/html
